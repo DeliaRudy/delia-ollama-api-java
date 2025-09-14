@@ -8,41 +8,26 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class Main {
+
+    public static String generatePrompt(String revenueTarget, String analyticsData) {
+        return "Given the following user data from Google Analytics, and the revenue target of '" + revenueTarget + "', generate 3 customer personas. For each persona, provide a mini description, a fictional story about their possible pain points, and a strategy to reach this persona based on the available data.\n\n" + analyticsData;
+    }
+
     public static void main(String[] args) throws IOException {
+        if (args.length != 1) {
+            System.err.println("Usage: java -jar <jar-file-name>.jar \"<revenue_target_or_growth_strategy>\"");
+            System.exit(1);
+        }
+        String revenueTarget = args[0];
+
         // You would have to  change this to variables
         String modelName = "gemma:2b";
-        String basePrompt = "Analyze the following energy consumption data and provide insights:\n\n";
 
-        // Create JSON array for "data"
-        JSONArray dataArray = new JSONArray();
+        // Fetch Google Analytics data
+        String analyticsData = GoogleAnalyticsDataFetcher.fetchData();
 
-        // Make this a database query resultset
-        dataArray.put(new JSONObject()
-                .put("Organization", "ABC")
-                .put("Measure", "Generator Electricity")
-                .put("Period", "Sep-24")
-                .put("Quantity", 13000)
-                .put("Unit of Measurement", "Kilowatt Hour"));
-
-        dataArray.put(new JSONObject()
-                .put("Organization", "ABC")
-                .put("Measure", "Solar Energy")
-                .put("Period", "Sep-24")
-                .put("Quantity", 2700)
-                .put("Unit of Measurement", "Kilowatt Hour"));
-
-        dataArray.put(new JSONObject()
-                .put("Organization", "ABC")
-                .put("Measure", "Metered Electricity")
-                .put("Period", "Sep-24")
-                .put("Quantity", 800)
-                .put("Unit of Measurement", "Kilowatt Hour"));
-
-        // Convert JSON data to a formatted string
-        String jsonDataString = dataArray.toString(2);  // Pretty-print JSON
-
-        // Construct the final prompt with JSON included
-        String promptText = basePrompt + jsonDataString;
+        // Construct the final prompt with the fetched data
+        String promptText = generatePrompt(revenueTarget, analyticsData);
 
         HttpURLConnection conn = null;
 
@@ -87,7 +72,11 @@ public class Main {
             // Parse the JSON response
             JSONObject jsonResponse = new JSONObject(response.toString());
             String responseText = jsonResponse.getString("response");
-            System.out.println("Response: " + responseText);
+
+            // Print the formatted response
+            System.out.println("--- Generated Customer Personas ---");
+            System.out.println(responseText);
+            System.out.println("------------------------------------");
 
         } catch (IOException e) {
             System.err.println("An error occurred: " + e.getMessage());

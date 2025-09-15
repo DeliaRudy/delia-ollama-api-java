@@ -9,9 +9,12 @@ import com.google.analytics.data.v1beta.RunReportRequest;
 import com.google.analytics.data.v1beta.RunReportResponse;
 import java.io.IOException;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class GoogleAnalyticsDataFetcher {
 
-    public static String fetchData() throws IOException {
+    public String fetchData(String startDate, String endDate) throws IOException {
         String propertyId = System.getenv("GA_PROPERTY_ID");
         if (propertyId == null || propertyId.isEmpty()) {
             throw new IllegalStateException("GA_PROPERTY_ID environment variable not set.");
@@ -36,7 +39,7 @@ public class GoogleAnalyticsDataFetcher {
                             .addMetrics(Metric.newBuilder().setName("activeUsers"))
                             .addMetrics(Metric.newBuilder().setName("newLeads"))
                             .addMetrics(Metric.newBuilder().setName("convertedLeads"))
-                            .addDateRanges(DateRange.newBuilder().setStartDate("2024-01-01").setEndDate("today"))
+                            .addDateRanges(DateRange.newBuilder().setStartDate(startDate).setEndDate(endDate))
                             .build();
 
             // Make the request.

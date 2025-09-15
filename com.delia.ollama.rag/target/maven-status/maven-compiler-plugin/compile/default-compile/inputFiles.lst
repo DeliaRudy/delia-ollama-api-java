@@ -1,2 +1,5 @@
+/app/com.delia.ollama.rag/src/main/java/org/example/Application.java
 /app/com.delia.ollama.rag/src/main/java/org/example/GoogleAnalyticsDataFetcher.java
-/app/com.delia.ollama.rag/src/main/java/org/example/Main.java
+/app/com.delia.ollama.rag/src/main/java/org/example/PersonaController.java
+/app/com.delia.ollama.rag/src/main/java/org/example/PersonaService.java
+/app/com.delia.ollama.rag/src/main/java/org/example/VertexAiClient.java

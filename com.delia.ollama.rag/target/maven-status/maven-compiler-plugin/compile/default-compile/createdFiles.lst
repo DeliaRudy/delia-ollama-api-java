@@ -1,2 +1,5 @@
+org/example/PersonaController.class
+org/example/PersonaService.class
+org/example/Application.class
+org/example/VertexAiClient.class
 org/example/GoogleAnalyticsDataFetcher.class
-org/example/Main.class

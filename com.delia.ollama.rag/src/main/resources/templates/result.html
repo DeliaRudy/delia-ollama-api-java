@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Generated Personas</title>
+</head>
+<body>
+    <h1>Generated Personas</h1>
+    <div th:if="${error}">
+        <p style="color: red;" th:text="${error}"></p>
+    </div>
+    <div th:if="${personas}">
+        <h2>Personas</h2>
+        <pre th:text="${personas}"></pre>
+    </div>
+    <div th:if="${analyticsData}">
+        <h2>Underlying Analytics Data</h2>
+        <pre th:text="${analyticsData}"></pre>
+    </div>
+    <a href="/">Go Back</a>
+</body>
+</html>
